@@ -1,17 +1,17 @@
 #include <Arduino.h>
 #include <Servo.h>
+#include <LiquidCrystal_I2C.h>
+#include "display.h"
 #include "ghost.h"
 #include "config.h"
 bool start = false;
 bool enegizer1Available = true; //of je de linker enegizer kan gebruiken
 bool enegizer2Available = true; //of je de rechter enegizer kan gebruiken
 int score = 0; //Je hoeveelheid punten
-int lives = 3; //de hoeveelheid keer dat je je ball kan verliest
-bool safe = true; //als deze true is dan  verlies je geen leven als je een bal verliest
-int ball = 1; // de hoeveelheid speelballen in het veld
 
 bool frightenedGhost();
 void setup() {
+  displaySetup();
   Serial.begin(9600);
   pinMode(leftButtonFlipperPin, INPUT_PULLUP);
   pinMode(rightButtonFlipperPin, INPUT_PULLUP);
@@ -51,6 +51,12 @@ void ballSafe(){
 void lose(){
 }
 void loop() {
+  displayLoop();
+  delay(1000);
+  lives -= 1;
+  if (lives == -1){
+    lives = 5;
+  }
   if (gameStart()){
     start = true;
     Serial.print("game started");

@@ -4,12 +4,13 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include "config.h"
+#include "lives.h"
 
 bool clydeNotDetectie = true;
 bool pinkyNotDetectie = true;
 bool blinkyNotDetectie = true;
 bool blinkyLocked = false; //is true waneer je je ball in blinky hebt terwijl hij  bang is
-bool pinkyLocked = false; //is true waneer je je ball in pinky hebt terwijl hij bang is
+bool pinkyLocked = false; //is true waneer je je   in pinky hebt terwijl hij bang is
 bool clydeLocked = false; //is true waneer je je ball in clyde hebt terwijl hij bang is
 bool startFrightenedGhost;
 unsigned long beginFrightenedGhost = 0;
