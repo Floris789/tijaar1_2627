@@ -16,11 +16,21 @@ const int pinkyServoPin = 0;
 const int blinkyDetectiePin = 0;
 const int clydeDetectiePin = 0;
 const int pinkyDetectiePin = 0;
+const int safeLedPin = 0;
 
+void pinModes(){
+    pinMode(safeLedPin, OUTPUT);
+    pinMode(leftButtonFlipperPin, INPUT_PULLUP);
+    pinMode(rightButtonFlipperPin, INPUT_PULLUP);
+    pinMode(blinkyDetectiePin, INPUT_PULLUP);
+    pinMode(clydeDetectiePin, INPUT_PULLUP);
+    pinMode(pinkyDetectiePin, INPUT_PULLUP);
+
+}
 const int scoreEnegizer = 50; //de score die je krijgt van een (available) enegizer te raken
 const int scoreGhost = 200; //de hoeveelheid punten die je krijgt als je je ball locked
 const int scoreMultibal = 500; //de hoeveelheid punten die je krijgt als alle ghosts gelocked zijn.
-const unsigned long safeDelay = 60000; //de tijd die je hebt om je safe te gebruiken
+const unsigned long safeTime = 60000; //de tijd die je hebt om je safe te gebruiken
 const unsigned long frightenedGhostTime = 30000; // de hoeveelheid seconde die de ghosts bang voor je zijn
 const unsigned long displayTime = 6000; //hoelang tekst zichtbaar blijft op het scherm
 const int servoGhostDownAngle = 0;// de fase waarin de servo van de ghost is. 0 betekent beneden, 1 betekent in lock fase en 2 in release fase.

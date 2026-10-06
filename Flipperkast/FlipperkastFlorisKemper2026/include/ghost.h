@@ -16,16 +16,18 @@ bool startFrightenedGhost;
 unsigned long beginFrightenedGhost = 0;
 extern int score;
 extern int ball;
+extern String display;
+bool endOfMultibal = false;
 
 bool frightenedGhost(){
   if (startFrightenedGhost == false){
     beginFrightenedGhost = millis();
     startFrightenedGhost = true;
+    score += scoreEnegizer;
+    blinky.write(servoGhostLockAngle);
+    pinky.write(servoGhostLockAngle);
+    clyde.write(servoGhostLockAngle);
   }
-  score += scoreEnegizer;
-  blinky.write(servoGhostLockAngle);
-  pinky.write(servoGhostLockAngle);
-  clyde.write(servoGhostLockAngle);
   blinkyLocked = !digitalRead(blinkyDetectiePin);
   pinkyLocked = !digitalRead(pinkyDetectiePin);
   clydeLocked = !digitalRead(clydeDetectiePin); 
@@ -59,27 +61,28 @@ bool frightenedGhost(){
   if (blinkyLocked && pinkyLocked && clydeLocked){ //multiball
     score += scoreMultibal;
     ball += 2;
-    //zet de display naar multibal
+    display = "multiball!";
     blinky.write(servoGhostReleaseAngle);
     pinky.write(servoGhostReleaseAngle);
     clyde.write(servoGhostReleaseAngle);
     clydeLocked = false;
     pinkyLocked = false;
     blinkyLocked = false;
-    delay(200);
+    endOfMultibal = true;
   }
-  if(beginFrightenedGhost + frightenedGhostTime >= millis()){
-  startFrightenedGhost = false;
-  if (blinkyLocked == false){
-    blinky.write(servoGhostDownAngle);
-  }
-  if (pinkyLocked == false){
-    pinky.write(servoGhostDownAngle);
-  }
-  if (clydeLocked == false){
-    clyde.write(servoGhostDownAngle);
-  }
-  return false;
+  if((beginFrightenedGhost + frightenedGhostTime < millis()) || endOfMultibal == true){
+    endOfMultibal = false;
+    startFrightenedGhost = false;
+    if (blinkyLocked == false){
+      blinky.write(servoGhostDownAngle);
+    }
+    if (pinkyLocked == false){
+      pinky.write(servoGhostDownAngle);
+    }
+    if (clydeLocked == false){
+      clyde.write(servoGhostDownAngle);
+    }
+    return false;
   }
   return true;
 }

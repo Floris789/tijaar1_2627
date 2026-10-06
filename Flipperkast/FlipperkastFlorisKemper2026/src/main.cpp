@@ -13,11 +13,6 @@ bool frightenedGhost();
 void setup() {
   displaySetup();
   Serial.begin(9600);
-  pinMode(leftButtonFlipperPin, INPUT_PULLUP);
-  pinMode(rightButtonFlipperPin, INPUT_PULLUP);
-  pinMode(blinkyDetectiePin, INPUT_PULLUP);
-  pinMode(clydeDetectiePin, INPUT_PULLUP);
-  pinMode(pinkyDetectiePin, INPUT_PULLUP);
   leftFlipper.attach(leftFlipperPin);
   rightFlipper.attach(rightFlipperPin);
   blinky.attach(blinkyServoPin);
@@ -51,7 +46,6 @@ void ballSafe(){
 void lose(){
 }
 void loop() {
-  displayLoop();
   delay(1000);
   lives -= 1;
   if (lives == -1){
@@ -61,6 +55,8 @@ void loop() {
     start = true;
     Serial.print("game started");
     flippers();
+    life();
+    displayLoop();
     if (startFrightenedGhost){
       frightenedGhost();
     }

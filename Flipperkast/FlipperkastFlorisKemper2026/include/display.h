@@ -77,7 +77,8 @@ void displayLoop(){
     lcd.setCursor(0,1);
     lcd.print(display);
   }
-  if (beginDisplay + displayTime >= millis()){
+  if (beginDisplay + displayTime < millis()){
+    lcd.setCursor(0,1);
     lcd.print("             ");
   }
   //f(beginFrightenedGhost + frightenedGhostTime >= millis())
