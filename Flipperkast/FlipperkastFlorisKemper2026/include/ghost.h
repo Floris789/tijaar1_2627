@@ -6,12 +6,8 @@
 #include "config.h"
 #include "lives.h"
 
-bool clydeNotDetectie = true;
-bool pinkyNotDetectie = true;
-bool blinkyNotDetectie = true;
-bool blinkyLocked = false; //is true waneer je je ball in blinky hebt terwijl hij  bang is
-bool pinkyLocked = false; //is true waneer je je   in pinky hebt terwijl hij bang is
-bool clydeLocked = false; //is true waneer je je ball in clyde hebt terwijl hij bang is
+bool ghostsNotDetectie[3] = {true, true, true};
+bool ghostsLocked[3] = {false, false, false}; // pinky is 0, blinky is 1 en ClydeLocked is 2. is true waneer je je ball in de spook hebt terwijl hij bang is.
 bool startFrightenedGhost; //de frightenedGhost word geloopt zolang deze true is.
 bool endOfMultibal = false;
 unsigned long beginFrightenedGhost = 0; //de begintijd waar frightenedghost begint
@@ -25,63 +21,41 @@ bool frightenedGhost(){
     beginFrightenedGhost = millis();
     startFrightenedGhost = true;
     score += scoreEnegizer;
-    blinky.write(servoGhostLockAngle); //servos in middenpositie zetten
-    pinky.write(servoGhostLockAngle);
-    clyde.write(servoGhostLockAngle);
-  }
-  blinkyLocked = !digitalRead(blinkyDetectiePin);
-  pinkyLocked = !digitalRead(pinkyDetectiePin);
-  clydeLocked = !digitalRead(clydeDetectiePin); 
-  // kijk later of de code hieronder beter kan
-  if (!digitalRead(clydeDetectiePin) && (clydeNotDetectie == true)){ //balllocked
-    score += scoreGhost;
-    display = "ball locked!";
-    clydeNotDetectie = false;
-  }
-  if (digitalRead(clydeDetectiePin)){ //zorgen dat het maar 1 keer balllocked doet totdat het niet meer zo is
-    clydeNotDetectie = true;
-  }
+    for (int i = 0; i<3; i++){
+      ghosts[i].write(servoGhostLockAngle); //servos in middenpositie zetten
+    }
 
-  if (!digitalRead(pinkyDetectiePin) && (pinkyNotDetectie == true)){ //ook voor pinky
-    score += scoreGhost;
-    display = "ball locked!";
-    pinkyNotDetectie = false;
   }
-  if (digitalRead(pinkyDetectiePin)){
-    pinkyNotDetectie = true;
+  for (int i = 0; i < 3; i++){
+    ghostsLocked[i] = !digitalRead(ghostsDetectiePinnen[i]);
   }
-
-  if (!digitalRead(blinkyDetectiePin) && (blinkyNotDetectie == true)){ //ook voor blinky
-    score += scoreGhost;
-    display = "ball locked!";
-    blinkyNotDetectie = false;
+  for (int i = 0; i < 3; i++){
+    if (ghostsLocked[i] && ghostsNotDetectie[i]){
+      score += scoreGhost;
+      display = "ball locked!";
+      ghostsNotDetectie[i] = false;
+    }
+    if (!ghostsLocked[i]){
+      ghostsNotDetectie[i] = true;
+    }
   }
-  if (digitalRead(blinkyDetectiePin)){
-    blinkyNotDetectie = true;
-  }
-  if (blinkyLocked && pinkyLocked && clydeLocked){ //multiball code
+  if (ghostsLocked[0] && ghostsLocked[1] && ghostsLocked[2]){ //multiball code
     score += scoreMultibal;
     ball += 2;
     display = "multiball!";
-    blinky.write(servoGhostReleaseAngle);
-    pinky.write(servoGhostReleaseAngle);
-    clyde.write(servoGhostReleaseAngle);
-    clydeLocked = false;
-    pinkyLocked = false;
-    blinkyLocked = false;
+    for (int i = 0; i < 3; i++){
+      ghosts[i].write(servoGhostReleaseAngle);
+      ghostsLocked[i] = false;
+    }
     endOfMultibal = true; // ook de frightenedGhost eindigd wanneer je multibal hebt
   }
   if((beginFrightenedGhost + frightenedGhostTime < millis()) || endOfMultibal == true){ // stopt de frightenedghost code, nadat de tijd voorbij is of multibal
     endOfMultibal = false;
     startFrightenedGhost = false;
-    if (blinkyLocked == false){
-      blinky.write(servoGhostDownAngle);
-    }
-    if (pinkyLocked == false){
-      pinky.write(servoGhostDownAngle);
-    }
-    if (clydeLocked == false){
-      clyde.write(servoGhostDownAngle);
+    for(int i = 0; i < 3; i++){
+      if (!ghostsLocked[i]){
+        ghosts[i].write(servoGhostDownAngle);
+      }
     }
     return false;
   }

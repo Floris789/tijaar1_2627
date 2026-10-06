@@ -13,19 +13,17 @@ extern String display;
 //else if  ((blinky or pinky or clyde is detected and frightenedGhosts = false) or (ldr is laag)) and safe = false
 bool ir(){
     return true;
+    // code voor de ir, moet nog doen
 }
 void life(){
-    if (ball > 1){ //als je meerdere ballen in het spel heb (van multibal) dan mag je geen safe.
-        safe = false;
-    }
-    if ((((!digitalRead(clydeDetectiePin)) || (!digitalRead(blinkyDetectiePin)) || (!digitalRead(pinkyDetectiePin))) && startFrightenedGhost == false) || ir()){
+    if (ball > 1) safe = false; //als je meerdere ballen in het spel heb (van multibal) dan mag je geen safe.
+    //later nog beter maken:
+    if ((((!digitalRead(ghostsDetectiePinnen[0])) || (!digitalRead(ghostsDetectiePinnen[1])) || (!digitalRead(ghostsDetectiePinnen[2]))) && startFrightenedGhost == false) || ir()){
         if (safe){ //als je in de poortjes gaat (zonder frightenedghost) of tussen de flippers valt dan raak je je safe kwijt
             safe = false;
             display = "ball saved!";
         }else if (ball > 1){ //of anders je extra bal
-            if (ball == 2){ //maar je krijgt wel je safe als het je laatste extra bal was.
-                safe = true;
-            }
+            if (ball == 2) safe = true; //maar je krijgt wel je safe als het je laatste extra bal was.
             ball --;
         }else{ //als je allebei niet hebt dan raak je toch je bal kwijt
             lives --;
@@ -37,9 +35,7 @@ void life(){
         digitalWrite(safeLedPin, HIGH);
 
         //ccode
-    }else{
-        digitalWrite(safeLedPin, LOW);
-    }
+    }else digitalWrite(safeLedPin, LOW);
 }
 
 #endif

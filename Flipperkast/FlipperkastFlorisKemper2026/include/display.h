@@ -7,9 +7,8 @@
 #include "config.h"
 extern int score;
 extern int lives;
-extern bool blinkyLocked;
-extern bool pinkyLocked;
-extern bool clydeLocked;
+extern bool ghostsLocked[3];
+
 unsigned long beginDisplay = 0; //de tijd van het begin van een nieuwe tekst.
 String display = " ";
 String displayBefore =  " ";
@@ -36,9 +35,7 @@ byte ghost[] = {
   B00000
 };
 void displaySetup(){
-blinkyLocked = true;
-pinkyLocked = true;
-clydeLocked = true;
+for (int i = 0; i<3; i++) ghostsLocked[i] = true;
 lcd.init();
 lcd.backlight();
 lcd.home();
@@ -56,17 +53,11 @@ void displayLoop(){
   }
   lcd.setCursor(13,1);
   lcd.print("   "); //clear het scherm waar de ghost stonden.
-  if (pinkyLocked){ //zet een ghost op het scherm voor elke die gelocked is.
-    lcd.setCursor(13,1);
-    lcd.write(1);
-  }
-  if (blinkyLocked){
-    lcd.setCursor(14,1);
-    lcd.write(1);
-  }
-  if (clydeLocked){
-    lcd.setCursor(15,1);
-    lcd.write(1);
+  for (int i = 0; i < lives; i++){ //zet een ghost op het scherm voor elke ghost die gelocked is.
+    if (ghostsLocked[i]){
+      lcd.setCursor(13 + i, 1);
+      lcd.write(1);
+    }
   }
   lcd.print(display);
   if (displayBefore != display){
@@ -79,7 +70,6 @@ void displayLoop(){
     lcd.setCursor(0,1);
     lcd.print("             ");
   }
-  //f(beginFrightenedGhost + frightenedGhostTime >= millis())
 }
 #endif
 

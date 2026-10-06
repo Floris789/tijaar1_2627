@@ -23,11 +23,8 @@ bool gameStart(){
   return ((start == false) && !digitalRead(leftButtonFlipperPin) && !digitalRead(rightButtonFlipperPin));
 }
 void flippers(){
-  if (digitalRead(leftButtonFlipperPin)){
-    leftFlipper.write(90);
-  }else{
-    leftFlipper.write(0);
-  }
+  if (digitalRead(leftButtonFlipperPin))leftFlipper.write(90);
+  else leftFlipper.write(0);
 }
 void enegizers(){
   if (enegizer1Available && digitalRead(leftIrPin)){
@@ -48,17 +45,13 @@ void lose(){
 void loop() {
   delay(1000);
   lives -= 1;
-  if (lives == -1){
-    lives = 5;
-  }
+  if (lives == -1) lives = 5;
   if (gameStart()){
     start = true;
     Serial.print("game started");
     flippers();
     life();
     displayLoop();
-    if (startFrightenedGhost){
-      frightenedGhost();
-    }
+    if (startFrightenedGhost) frightenedGhost();
   }
 }

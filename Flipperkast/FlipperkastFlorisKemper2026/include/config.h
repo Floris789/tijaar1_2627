@@ -13,19 +13,14 @@ const int rightIrPin = 0;
 const int blinkyServoPin = 0;
 const int clydeServoPin = 0;
 const int pinkyServoPin = 0;
-const int blinkyDetectiePin = 0;
-const int clydeDetectiePin = 0;
-const int pinkyDetectiePin = 0;
+const int ghostsDetectiePinnen[3] = {0, 0, 0}; //pinky, blinky en clyde
 const int safeLedPin = 0;
 
 void pinModes(){
     pinMode(safeLedPin, OUTPUT);
     pinMode(leftButtonFlipperPin, INPUT_PULLUP);
     pinMode(rightButtonFlipperPin, INPUT_PULLUP);
-    pinMode(blinkyDetectiePin, INPUT_PULLUP);
-    pinMode(clydeDetectiePin, INPUT_PULLUP);
-    pinMode(pinkyDetectiePin, INPUT_PULLUP);
-
+    for (int i = 0; i < 3; i++) pinMode(ghostsDetectiePinnen[i], INPUT_PULLUP);
 }
 const int scoreEnegizer = 50; //de score die je krijgt van een (available) enegizer te raken.
 const int scoreGhost = 200; //de hoeveelheid punten die je krijgt als je je ball locked.
@@ -41,5 +36,7 @@ Servo rightFlipper;
 Servo blinky;
 Servo clyde;
 Servo pinky;
+Servo ghosts[3] = {pinky, blinky, clyde};
+
 
 #endif
