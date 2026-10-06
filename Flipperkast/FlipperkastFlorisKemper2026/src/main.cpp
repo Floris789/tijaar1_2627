@@ -4,7 +4,7 @@
 #include "display.h"
 #include "ghost.h"
 #include "config.h"
-bool start = false;
+bool start = false; //of de game is begonnen.
 bool enegizer1Available = true; //of je de linker enegizer kan gebruiken
 bool enegizer2Available = true; //of je de rechter enegizer kan gebruiken
 int score = 0; //Je hoeveelheid punten

@@ -10,7 +10,7 @@ extern int lives;
 extern bool blinkyLocked;
 extern bool pinkyLocked;
 extern bool clydeLocked;
-unsigned long beginDisplay = 0;
+unsigned long beginDisplay = 0; //de tijd van het begin van een nieuwe tekst.
 String display = " ";
 String displayBefore =  " ";
 
@@ -41,9 +41,7 @@ pinkyLocked = true;
 clydeLocked = true;
 lcd.init();
 lcd.backlight();
-//lcd.createChar(0, pacmen);
 lcd.home();
-//lcd.write(0);
 lcd.createChar(0, pacmen);
 lcd.createChar(1, ghost);
 }
@@ -53,12 +51,12 @@ void displayLoop(){
   lcd.setCursor(11,0);
   lcd.print("     ");
   for (int i = 0; i < lives; i++){
-    lcd.setCursor(15 - i,0); //print een pacmen 
+    lcd.setCursor(15 - i,0); //print een pacmen voor elke leven die je hebt
     lcd.write(0);
   }
   lcd.setCursor(13,1);
-  lcd.print("   ");
-  if (pinkyLocked){
+  lcd.print("   "); //clear het scherm waar de ghost stonden.
+  if (pinkyLocked){ //zet een ghost op het scherm voor elke die gelocked is.
     lcd.setCursor(13,1);
     lcd.write(1);
   }
@@ -77,7 +75,7 @@ void displayLoop(){
     lcd.setCursor(0,1);
     lcd.print(display);
   }
-  if (beginDisplay + displayTime < millis()){
+  if (beginDisplay + displayTime < millis()){ //cleart het scherm na een tijd van nadat het display is weergegeven
     lcd.setCursor(0,1);
     lcd.print("             ");
   }

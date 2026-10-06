@@ -27,15 +27,15 @@ void pinModes(){
     pinMode(pinkyDetectiePin, INPUT_PULLUP);
 
 }
-const int scoreEnegizer = 50; //de score die je krijgt van een (available) enegizer te raken
-const int scoreGhost = 200; //de hoeveelheid punten die je krijgt als je je ball locked
+const int scoreEnegizer = 50; //de score die je krijgt van een (available) enegizer te raken.
+const int scoreGhost = 200; //de hoeveelheid punten die je krijgt als je je ball locked.
 const int scoreMultibal = 500; //de hoeveelheid punten die je krijgt als alle ghosts gelocked zijn.
-const unsigned long safeTime = 60000; //de tijd die je hebt om je safe te gebruiken
-const unsigned long frightenedGhostTime = 30000; // de hoeveelheid seconde die de ghosts bang voor je zijn
-const unsigned long displayTime = 6000; //hoelang tekst zichtbaar blijft op het scherm
-const int servoGhostDownAngle = 0;// de fase waarin de servo van de ghost is. 0 betekent beneden, 1 betekent in lock fase en 2 in release fase.
-const int servoGhostLockAngle = 0;// de fase waarin de servo van de ghost is. 0 betekent beneden, 1 betekent in lock fase en 2 in release fase.
-const int servoGhostReleaseAngle = 0;// de fase waarin de servo van de ghost is. 0 betekent beneden, 1 betekent in lock fase en 2 in release fase.
+const unsigned long safeTime = 60000; //de tijd die je hebt om je safe te gebruiken.
+const unsigned long frightenedGhostTime = 30000; // de hoeveelheid seconde waar de ghosts bang voor je zijn.
+const unsigned long displayTime = 6000; //hoelang tekst zichtbaar blijft op het scherm.
+const int servoGhostDownAngle = 0;// Dit is de hoek waar de servo in moet staan om de ball in de ghost naar beneden te brengen.
+const int servoGhostLockAngle = 0;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te locken.
+const int servoGhostReleaseAngle = 0;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te release.
 Servo leftFlipper;
 Servo rightFlipper;
 Servo blinky;
