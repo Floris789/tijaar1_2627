@@ -8,7 +8,6 @@ bool start = false; //of de game is begonnen.
 bool enegizer1Available = true; //of je de linker enegizer kan gebruiken
 bool enegizer2Available = true; //of je de rechter enegizer kan gebruiken
 int score = 0; //Je hoeveelheid punten
-
 bool frightenedGhost();
 void setup() {
   displaySetup();
@@ -35,12 +34,6 @@ void enegizers(){
     enegizer2Available = false;
     frightenedGhost();
   }
-}
-void lock(){
-}
-void ballSafe(){
-}
-void lose(){
 }
 void loop() {
   delay(1000);

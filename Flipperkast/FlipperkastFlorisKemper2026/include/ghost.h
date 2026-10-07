@@ -5,7 +5,6 @@
 #include <Servo.h>
 #include "config.h"
 #include "lives.h"
-
 bool ghostsNotDetectie[3] = {true, true, true};
 bool ghostsLocked[3] = {false, false, false}; // pinky is 0, blinky is 1 en ClydeLocked is 2. is true waneer je je ball in de spook hebt terwijl hij bang is.
 bool startFrightenedGhost; //de frightenedGhost word geloopt zolang deze true is.
@@ -14,8 +13,6 @@ unsigned long beginFrightenedGhost = 0; //de begintijd waar frightenedghost begi
 extern int score;
 extern int ball;
 extern String display;
-
-
 bool frightenedGhost(){
   if (startFrightenedGhost == false){ //zorgt dat deze code maar 1 word afgespeelt voor elke keer frightenedGHost word geactiveerd.
     beginFrightenedGhost = millis();
@@ -24,7 +21,6 @@ bool frightenedGhost(){
     for (int i = 0; i<3; i++){
       ghosts[i].write(servoGhostLockAngle); //servos in middenpositie zetten
     }
-
   }
   for (int i = 0; i < 3; i++){
     ghostsLocked[i] = !digitalRead(ghostsDetectiePinnen[i]);
@@ -61,5 +57,4 @@ bool frightenedGhost(){
   }
   return true;
 }
-
 #endif

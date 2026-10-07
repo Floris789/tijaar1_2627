@@ -8,11 +8,9 @@
 extern int score;
 extern int lives;
 extern bool ghostsLocked[3];
-
 unsigned long beginDisplay = 0; //de tijd van het begin van een nieuwe tekst.
 String display = " ";
 String displayBefore =  " ";
-
 LiquidCrystal_I2C lcd(0x27,16,2);
 byte pacmen[] = {
   B00000,
@@ -72,6 +70,5 @@ void displayLoop(){
   }
 }
 #endif
-
 //https://github.com/johnrickman/LiquidCrystal_I2C
 //https://maxpromer.github.io/LCD-Character-Creator/

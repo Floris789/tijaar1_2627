@@ -3,7 +3,6 @@
 #pragma once 
 #include <Arduino.h>
 #include <Servo.h>
-
 const int leftButtonFlipperPin = 0;
 const int rightButtonFlipperPin = 0;
 const int leftFlipperPin = 0;
@@ -15,7 +14,6 @@ const int clydeServoPin = 0;
 const int pinkyServoPin = 0;
 const int ghostsDetectiePinnen[3] = {0, 0, 0}; //pinky, blinky en clyde
 const int safeLedPin = 0;
-
 void pinModes(){
     pinMode(safeLedPin, OUTPUT);
     pinMode(leftButtonFlipperPin, INPUT_PULLUP);
@@ -37,6 +35,4 @@ Servo blinky;
 Servo clyde;
 Servo pinky;
 Servo ghosts[3] = {pinky, blinky, clyde};
-
-
 #endif
