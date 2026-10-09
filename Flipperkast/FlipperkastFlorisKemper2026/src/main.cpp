@@ -22,7 +22,7 @@ bool gameStart(){
   return ((start == false) && !digitalRead(leftButtonFlipperPin) && !digitalRead(rightButtonFlipperPin));
 }
 void flippers(){
-  if (digitalRead(leftButtonFlipperPin))leftFlipper.write(90);
+  if (digitalRead(leftButtonFlipperPin)) leftFlipper.write(90);
   else leftFlipper.write(0);
 }
 void enegizers(){
