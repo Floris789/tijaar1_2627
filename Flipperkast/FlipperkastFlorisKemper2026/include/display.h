@@ -12,7 +12,7 @@ unsigned long beginDisplay = 0; //de tijd van het begin van een nieuwe tekst.
 String display = " ";
 String displayBefore =  " ";
 LiquidCrystal_I2C lcd(0x27,16,2);
-byte pacmen[] = {
+byte pacman[] = {
   B00000,
   B01110,
   B11100,
@@ -37,7 +37,7 @@ for (int i = 0; i<3; i++) ghostsLocked[i] = true;
 lcd.init();
 lcd.backlight();
 lcd.home();
-lcd.createChar(0, pacmen);
+lcd.createChar(0, pacman);
 lcd.createChar(1, ghost);
 }
 void displayLoop(){

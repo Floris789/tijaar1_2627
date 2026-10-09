@@ -9,6 +9,7 @@ const int leftFlipperPin = 0;
 const int rightFlipperPin = 0;
 const int leftIrPin =0;
 const int rightIrPin = 0;
+const int ldrPin = 0;
 const int blinkyServoPin = 0;
 const int clydeServoPin = 0;
 const int pinkyServoPin = 0;

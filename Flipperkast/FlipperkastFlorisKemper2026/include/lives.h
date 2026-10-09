@@ -10,6 +10,7 @@ bool safe = true; //als deze true is dan  verlies je geen leven als je een bal v
 int lives = 3; //de hoeveelheid keer dat je je ball kan verliest
 extern String display;
 bool ldr(){
+    analogRead(ldrPin);
     return true;
     // code voor de ldr, moet nog doen
 }
