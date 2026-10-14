@@ -33,7 +33,7 @@ byte ghost[] = {
   B00000
 };
 void displaySetup(){
-for (int i = 0; i<3; i++) ghostsLocked[i] = true;
+//for (int i = 0; i<3; i++) ghostsLocked[i] = true;
 lcd.init();
 lcd.backlight();
 lcd.home();
@@ -51,13 +51,12 @@ void displayLoop(){
   }
   lcd.setCursor(13,1);
   lcd.print("   "); //clear het scherm waar de ghost stonden.
-  for (int i = 0; i < lives; i++){ //zet een ghost op het scherm voor elke ghost die gelocked is.
+  for (int i = 0; i < 3; i++){ //zet een ghost op het scherm voor elke ghost die gelocked is.
     if (ghostsLocked[i]){
       lcd.setCursor(13 + i, 1);
       lcd.write(1);
     }
   }
-  lcd.print(display);
   if (displayBefore != display){
     displayBefore = display;
     beginDisplay = millis();
@@ -67,6 +66,7 @@ void displayLoop(){
   if (beginDisplay + displayTime < millis()){ //cleart het scherm na een tijd van nadat het display is weergegeven
     lcd.setCursor(0,1);
     lcd.print("             ");
+    display = " ";
   }
 }
 #endif
