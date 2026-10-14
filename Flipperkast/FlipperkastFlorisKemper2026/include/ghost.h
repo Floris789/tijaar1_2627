@@ -13,6 +13,8 @@ unsigned long beginFrightenedGhost = 0; //de begintijd waar frightenedghost begi
 extern int score;
 extern int ball;
 extern String display;
+extern bool enegizer1Available;
+extern bool enegizer2Available;
 bool frightenedGhost(){
   if (startFrightenedGhost == false){ //zorgt dat deze code maar 1 word afgespeelt voor elke keer frightenedGHost word geactiveerd.
     beginFrightenedGhost = millis();
@@ -28,7 +30,7 @@ bool frightenedGhost(){
   for (int i = 0; i < 3; i++){
     if (ghostsLocked[i] && ghostsNotDetectie[i]){
       score += scoreGhost;
-      display = "ball locked!";
+      display = "ball locked! ";
       ghostsNotDetectie[i] = false;
     }
     if (!ghostsLocked[i]){
@@ -38,12 +40,13 @@ bool frightenedGhost(){
   if (ghostsLocked[0] && ghostsLocked[1] && ghostsLocked[2]){ //multiball code
     score += scoreMultibal;
     ball += 2;
-    display = "multiball!";
+    display = "multiball!   ";
     for (int i = 0; i < 3; i++){
       ghosts[i].write(servoGhostReleaseAngle);
       ghostsLocked[i] = false;
     }
     endOfMultibal = true; // ook de frightenedGhost eindigd wanneer je multibal hebt
+    delay(500); // dit kan beter tbf maar een probleem voor later
   }
   if((beginFrightenedGhost + frightenedGhostTime < millis()) || endOfMultibal == true){ // stopt de frightenedghost code, nadat de tijd voorbij is of multibal
     endOfMultibal = false;
@@ -53,6 +56,8 @@ bool frightenedGhost(){
         ghosts[i].write(servoGhostDownAngle);
       }
     }
+    enegizer1Available = true;
+    enegizer2Available = true;
     return false;
   }
   return true;

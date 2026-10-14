@@ -3,18 +3,18 @@
 #pragma once 
 #include <Arduino.h>
 #include <Servo.h>
-const int leftButtonFlipperPin = 0;
-const int rightButtonFlipperPin = 0;
-const int leftFlipperPin = 0;
-const int rightFlipperPin = 0;
-const int leftIrPin =0;
-const int rightIrPin = 0;
-const int ldrPin = 0;
-const int blinkyServoPin = 0;
-const int clydeServoPin = 0;
-const int pinkyServoPin = 0;
-const int ghostsDetectiePinnen[3] = {0, 0, 0}; //pinky, blinky en clyde
-const int safeLedPin = 0;
+const int leftButtonFlipperPin = -1;
+const int rightButtonFlipperPin = -1;
+const int leftFlipperPin = -1;
+const int rightFlipperPin = -1;
+const int leftIrPin = -1;
+const int rightIrPin = 7;
+const int ldrPin = -1;
+const int blinkyServoPin = 4;
+const int clydeServoPin = -1;
+const int pinkyServoPin = -1;
+const int ghostsDetectiePinnen[3] = {-1, -1, -1}; //pinky, blinky en clyde
+const int safeLedPin = -1;
 void pinModes(){
     pinMode(safeLedPin, OUTPUT);
     pinMode(leftButtonFlipperPin, INPUT_PULLUP);
@@ -28,8 +28,8 @@ const unsigned long safeTime = 60000; //de tijd die je hebt om je safe te gebrui
 const unsigned long frightenedGhostTime = 30000; // de hoeveelheid seconde waar de ghosts bang voor je zijn.
 const unsigned long displayTime = 6000; //hoelang tekst zichtbaar blijft op het scherm.
 const int servoGhostDownAngle = 0;// Dit is de hoek waar de servo in moet staan om de ball in de ghost naar beneden te brengen.
-const int servoGhostLockAngle = 0;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te locken.
-const int servoGhostReleaseAngle = 0;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te release.
+const int servoGhostLockAngle = 90;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te locken.
+const int servoGhostReleaseAngle = 180;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te release.
 Servo leftFlipper;
 Servo rightFlipper;
 Servo blinky;
