@@ -37,18 +37,17 @@ void life(){
             safe = true;
         }
     } else dying = false;
-    if (safe){ //safe led aanzetten waneer safe waar is
+    if (safe){
         if (!startSafe){
             startSafe = true;
             beginSafeTime = millis();
             digitalWrite(safeLedPin, HIGH);
         }
-        if (beginSafeTime + safeTime <= millis()){
-            safe = false;
-            startSafe = false;
-        }
-        //ccode
-    }else digitalWrite(safeLedPin, LOW);
+        if (millis() - beginSafeTime >= safeTime) safe = false;
+    } else {
+    startSafe = false;
+    digitalWrite(safeLedPin, LOW);
+    }
     if (lives <= 0){
         display = "game over";
         startSafe = false;
