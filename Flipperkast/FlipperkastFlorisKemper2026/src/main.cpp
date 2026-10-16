@@ -30,7 +30,7 @@ void enegizers(){
   if (enegizer1Available && !(digitalRead(leftIrPin))){
     enegizer1Available = false;
     frightenedGhost(); //zorgt ervoor dat je in de spoken moet nadat je over een enegizer bent gegaan
-  }
+  } 
   if (enegizer2Available && !(digitalRead(rightIrPin))){
     enegizer2Available = false;
     frightenedGhost();

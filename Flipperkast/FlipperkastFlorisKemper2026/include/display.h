@@ -6,8 +6,11 @@
 #include "lives.h"
 #include "config.h"
 extern int score;
+int scoreBefore;
 extern int lives;
+int livesBefore = 0;
 extern bool ghostsLocked[3];
+bool ghostsLockedBefore[3];
 unsigned long beginDisplay = 0; //de tijd van het begin van een nieuwe tekst.
 String display = " ";
 String displayBefore =  " ";
@@ -34,6 +37,9 @@ byte ghost[] = {
 };
 void displaySetup(){
 //for (int i = 0; i<3; i++) ghostsLocked[i] = true;
+for (int i = 0; i < 3; i++) {
+   ghostsLockedBefore[i] = ghostsLocked[i];
+}
 lcd.init();
 lcd.backlight();
 lcd.home();
@@ -41,21 +47,33 @@ lcd.createChar(0, pacman);
 lcd.createChar(1, ghost);
 }
 void displayLoop(){
-  lcd.home();
-  lcd.print(score);
-  lcd.setCursor(11,0);
-  lcd.print("     ");
-  for (int i = 0; i < lives; i++){
-    lcd.setCursor(15 - i,0); //print een pacmen voor elke leven die je hebt
-    lcd.write(0);
+  if (score != scoreBefore){
+    lcd.home();
+    lcd.print(score);
+    scoreBefore = score;
   }
-  lcd.setCursor(13,1);
-  lcd.print("   "); //clear het scherm waar de ghost stonden.
-  for (int i = 0; i < 3; i++){ //zet een ghost op het scherm voor elke ghost die gelocked is.
-    if (ghostsLocked[i]){
-      lcd.setCursor(13 + i, 1);
-      lcd.write(1);
+  if (lives != livesBefore){
+    lcd.setCursor(11,0);
+    lcd.print("     ");
+    for (int i = 0; i < lives; i++){
+      lcd.setCursor(15 - i,0); //print een pacmen voor elke leven die je hebt
+      lcd.write(0);
     }
+    livesBefore = lives;
+  }
+
+  for (int i = 0; i < 3; i++){ //zet een ghost op het scherm voor elke ghost die gelocked is.
+    if (ghostsLocked[i] != ghostsLockedBefore[i]){
+      ghostsLockedBefore[i] = ghostsLocked[i];
+      if (ghostsLocked[i]){
+        lcd.setCursor(13 + i, 1);
+        lcd.write(1);
+      }else {
+        lcd.setCursor(13 + i, 1);
+        lcd.print(" "); //clear het scherm waar de ghost stonden.
+      }
+    }
+
   }
   if (displayBefore != display){
     displayBefore = display;
@@ -67,6 +85,7 @@ void displayLoop(){
     lcd.setCursor(0,1);
     lcd.print("             ");
     display = " ";
+    displayBefore = " ";
   }
 }
 #endif
