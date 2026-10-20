@@ -15,6 +15,7 @@ extern int ball;
 extern String display;
 extern bool enegizer1Available;
 extern bool enegizer2Available;
+extern unsigned long graceUntil;
 bool frightenedGhost(){
   if (startFrightenedGhost == false){ //zorgt dat deze code maar 1 word afgespeelt voor elke keer frightenedGHost word geactiveerd.
     beginFrightenedGhost = millis();
@@ -48,7 +49,7 @@ bool frightenedGhost(){
     endOfMultibal = true; // ook de frightenedGhost eindigd wanneer je multibal hebt
     delay(500); // dit kan beter tbf maar een probleem voor later
   }
-  if((beginFrightenedGhost + frightenedGhostTime < millis()) || endOfMultibal == true){ // stopt de frightenedghost code, nadat de tijd voorbij is of multibal
+  if((millis() - beginFrightenedGhost > frightenedGhostTime) || endOfMultibal == true){ // stopt de frightenedghost code, nadat de tijd voorbij is of multibal
     endOfMultibal = false;
     startFrightenedGhost = false;
     for(int i = 0; i < 3; i++){

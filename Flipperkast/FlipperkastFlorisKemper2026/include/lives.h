@@ -10,7 +10,9 @@ bool safe = true; //als deze true is dan  verlies je geen leven als je een bal v
 int lives = 3; //de hoeveelheid keer dat je je ball kan verliest
 bool dying = false;
 bool startSafe = false;
+bool gameOver = false;
 unsigned long beginSafeTime = 0;
+unsigned long graceUntil = 0; //tot dit tijdstip telt een bal in een poortje niet als verloren
 extern String display;
 bool ldr(){
     if (analogRead(ldrPin) < 1000){
@@ -20,10 +22,19 @@ bool ldr(){
     // code voor de ldr, moet nog doen
 }
 void life(){
+    if (gameOver) return;
 
     if (ball > 1) safe = false; //als je meerdere ballen in het spel heb (van multibal) dan mag je geen safe.
-    //later nog beter maken:
-    if (((((!digitalRead(ghostsDetectiePinnen[0])) || (!digitalRead(ghostsDetectiePinnen[1])) || (!digitalRead(ghostsDetectiePinnen[2]))) && startFrightenedGhost == false) || ldr()) && dying == false){
+
+    //een bal in een poortje telt alleen als verloren als dat poortje niet vastgehouden wordt
+    bool gate = false;
+    for (int i = 0; i < 3; i++){
+        if (!digitalRead(ghostsDetectiePinnen[i]) && !ghostsLocked[i]) gate = true;
+    }
+    bool graceOver = millis() >= graceUntil;
+    bool lost = (gate && startFrightenedGhost == false && graceOver) || ldr();
+
+    if (lost && dying == false){
         dying = true;
         if (safe){ //als je in de poortjes gaat (zonder frightenedghost) of tussen de flippers valt dan raak je je safe kwijt
             safe = false;
@@ -36,7 +47,8 @@ void life(){
             display = "lost ball :(";
             safe = true;
         }
-    } else dying = false;
+    } else if (!lost) dying = false;
+
     if (safe){
         if (!startSafe){
             startSafe = true;
@@ -45,12 +57,14 @@ void life(){
         }
         if (millis() - beginSafeTime >= safeTime) safe = false;
     } else {
-    startSafe = false;
-    digitalWrite(safeLedPin, LOW);
+        startSafe = false;
+        digitalWrite(safeLedPin, LOW);
     }
     if (lives <= 0){
+        gameOver = true;
         display = "game over";
         startSafe = false;
+        digitalWrite(safeLedPin, LOW);
     }
 }
 #endif

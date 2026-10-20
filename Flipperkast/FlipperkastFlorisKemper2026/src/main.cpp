@@ -7,23 +7,36 @@ bool start = false; //of de game is begonnen.
 bool enegizer1Available = true; //of je de linker enegizer kan gebruiken
 bool enegizer2Available = true; //of je de rechter enegizer kan gebruiken
 int score = 0; //Je hoeveelheid punten
+Adafruit_PCF8574 pcf;
 void setup() {
+  Serial.begin(9600);
+
+  if (!pcf.begin(0x20)) {
+    Serial.println("PCF8574 niet gevonden!");
+    while (true) {
+      delay(100);
+    }
+  }
+
+  pcf.pinMode(leftButtonFlipperPin, INPUT_PULLUP);
+  pcf.pinMode(rightButtonFlipperPin, INPUT_PULLUP);
+
   pinModes();
   displaySetup();
-  Serial.begin(9600);
-  leftFlipper.attach(leftFlipperPin);
-  rightFlipper.attach(rightFlipperPin);
-  ghosts[0].attach(pinkyServoPin);
-  ghosts[1].attach(blinkyServoPin);
-  ghosts[2].attach(clydeServoPin);
+
+  leftFlipper.attach(leftFlipperPin);   leftFlipper.write(0);
+  rightFlipper.attach(rightFlipperPin); rightFlipper.write(0);
+  ghosts[0].attach(pinkyServoPin);  ghosts[0].write(servoGhostDownAngle);
+  ghosts[1].attach(blinkyServoPin); ghosts[1].write(servoGhostDownAngle);
+  ghosts[2].attach(clydeServoPin);  ghosts[2].write(servoGhostDownAngle);
 }
 bool gameStart(){
-return ((start == false) && !digitalRead(leftButtonFlipperPin) && !digitalRead(rightButtonFlipperPin));
+return ((start == false) && !pcf.digitalRead(leftButtonFlipperPin) && !pcf.digitalRead(rightButtonFlipperPin));
 }
 void flippers(){
-  if (!(digitalRead(leftButtonFlipperPin))) leftFlipper.write(90);
+  if (!(pcf.digitalRead(leftButtonFlipperPin))) leftFlipper.write(90);
   else leftFlipper.write(0);
-  if (!(digitalRead(rightButtonFlipperPin))) rightFlipper.write(90);
+  if (!(pcf.digitalRead(rightButtonFlipperPin))) rightFlipper.write(90);
   else rightFlipper.write(0);
 }
 void enegizers(){
@@ -55,16 +68,32 @@ void loop() {
   //cool display:
   // lives -= 1;
   // if (lives == -1) lives = 5;
+
+  //pcf test:
+  // Serial.print("Links: ");
+  // Serial.print(!pcf.digitalRead(leftButtonFlipperPin));
+
+  // Serial.print(" | Rechts: ");
+  // Serial.println(!pcf.digitalRead(rightButtonFlipperPin));
+
+  // delay(100);
+
+
   if (!start && gameStart()){
     start = true;
      display = "start";
     Serial.print("game started\n");
   }
-  if (gameStart() || start == true){
-    flippers();
-    enegizers();
-    life();
+  if (start){
+    if (!gameOver){
+      flippers();
+      enegizers();
+      life();
+      if (startFrightenedGhost) frightenedGhost();
+    } else {
+      leftFlipper.write(0);
+      rightFlipper.write(0);
+    }
     displayLoop();
-    if (startFrightenedGhost) frightenedGhost();
   }
 }

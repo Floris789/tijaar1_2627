@@ -12,6 +12,7 @@ int livesBefore = 0;
 extern bool ghostsLocked[3];
 bool ghostsLockedBefore[3];
 unsigned long beginDisplay = 0; //de tijd van het begin van een nieuwe tekst.
+bool textVisible; //is true waneer er text op de display is
 String display = " ";
 String displayBefore =  " ";
 LiquidCrystal_I2C lcd(0x27,16,2);
@@ -36,15 +37,17 @@ byte ghost[] = {
   B00000
 };
 void displaySetup(){
-//for (int i = 0; i<3; i++) ghostsLocked[i] = true;
-for (int i = 0; i < 3; i++) {
-   ghostsLockedBefore[i] = ghostsLocked[i];
-}
-lcd.init();
-lcd.backlight();
-lcd.home();
-lcd.createChar(0, pacman);
-lcd.createChar(1, ghost);
+  //for (int i = 0; i<3; i++) ghostsLocked[i] = true;
+  for (int i = 0; i < 3; i++) {
+    ghostsLockedBefore[i] = ghostsLocked[i];
+  }
+  lcd.init();
+  lcd.backlight();
+  lcd.home();
+  lcd.createChar(0, pacman);
+  lcd.createChar(1, ghost);
+  lcd.home();
+  lcd.print(0);
 }
 void displayLoop(){
   if (score != scoreBefore){
@@ -78,10 +81,12 @@ void displayLoop(){
   if (displayBefore != display){
     displayBefore = display;
     beginDisplay = millis();
+    textVisible = true;
     lcd.setCursor(0,1);
     lcd.print(display);
+    for (int i = display.length(); i < 13; i++) lcd.print(' '); //zet op de rest spaties
   }
-  if (beginDisplay + displayTime < millis()){ //cleart het scherm na een tijd van nadat het display is weergegeven
+  if (millis() - beginDisplay > displayTime){ //cleart het scherm na een tijd van nadat het display is weergegeven
     lcd.setCursor(0,1);
     lcd.print("             ");
     display = " ";
