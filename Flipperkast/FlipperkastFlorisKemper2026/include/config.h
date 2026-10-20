@@ -2,23 +2,26 @@
 #define config_h
 #pragma once 
 #include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_PCF8574.h>
 #include <Servo.h>
-const int leftButtonFlipperPin = -1;
-const int rightButtonFlipperPin = -1;
-const int leftFlipperPin = -1;
-const int rightFlipperPin = -1;
-const int leftIrPin = -1;
+const int leftButtonFlipperPin = 0;  // PCF8574 P0
+const int rightButtonFlipperPin = 1; // PCF8574 P1
+const int leftFlipperPin = 99;
+const int rightFlipperPin = 99;
+const int leftIrPin = 99;
 const int rightIrPin = 7;
-const int ldrPin = -1;
+const int ldrPin = 99;
 const int blinkyServoPin = 4;
-const int clydeServoPin = -1;
-const int pinkyServoPin = -1;
-const int ghostsDetectiePinnen[3] = {-1, -1, -1}; //pinky, blinky en clyde
-const int safeLedPin = -1;
+const int clydeServoPin = 99;
+const int pinkyServoPin = 99;
+const int ghostsDetectiePinnen[3] = {99, 99, 99}; //pinky, blinky en clyde
+const int safeLedPin = 99;
+extern Adafruit_PCF8574 pcf;
 void pinModes(){
     pinMode(safeLedPin, OUTPUT);
-    pinMode(leftButtonFlipperPin, INPUT_PULLUP);
-    pinMode(rightButtonFlipperPin, INPUT_PULLUP);
+    //pinMode(leftButtonFlipperPin, INPUT_PULLUP);
+    //pinMode(rightButtonFlipperPin, INPUT_PULLUP);
     for (int i = 0; i < 3; i++) pinMode(ghostsDetectiePinnen[i], INPUT_PULLUP);
 }
 const int scoreEnegizer = 50; //de score die je krijgt van een (available) enegizer te raken.
