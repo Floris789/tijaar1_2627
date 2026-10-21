@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include "config.h"
-#include "ghost.h"
 int ball = 1; // de hoeveelheid speelballen in het veld
 bool safe = true; //als deze true is dan  verlies je geen leven als je een bal verliest
 int lives = 3; //de hoeveelheid keer dat je je ball kan verliest

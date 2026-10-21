@@ -18,6 +18,8 @@ const int pinkyServoPin = 99;
 const int ghostsDetectiePinnen[3] = {99, 99, 99}; //pinky, blinky en clyde
 const int safeLedPin = 99;
 extern Adafruit_PCF8574 pcf;
+extern bool ghostsLocked[3];
+extern bool startFrightenedGhost;
 void pinModes(){
     pinMode(safeLedPin, OUTPUT);
     //pinMode(leftButtonFlipperPin, INPUT_PULLUP);

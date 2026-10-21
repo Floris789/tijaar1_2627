@@ -86,8 +86,9 @@ void displayLoop(){
     lcd.print(display);
     for (int i = display.length(); i < 13; i++) lcd.print(' '); //zet op de rest spaties
   }
-  if (millis() - beginDisplay > displayTime){ //cleart het scherm na een tijd van nadat het display is weergegeven
+  if (!gameOver && textVisible && millis() - beginDisplay > displayTime){ //cleart het scherm na een tijd van nadat het display is weergegeven
     lcd.setCursor(0,1);
+    textVisible = false;
     lcd.print("             ");
     display = " ";
     displayBefore = " ";
