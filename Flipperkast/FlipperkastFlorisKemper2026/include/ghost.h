@@ -48,6 +48,7 @@ bool frightenedGhost(){
     }
     endOfMultibal = true; // ook de frightenedGhost eindigd wanneer je multibal hebt
     delay(500); // dit kan beter tbf maar een probleem voor later
+    graceUntil = millis() + 3000;
   }
   if((millis() - beginFrightenedGhost > frightenedGhostTime) || endOfMultibal == true){ // stopt de frightenedghost code, nadat de tijd voorbij is of multibal
     endOfMultibal = false;
