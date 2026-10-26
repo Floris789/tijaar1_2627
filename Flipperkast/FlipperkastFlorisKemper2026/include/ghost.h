@@ -25,10 +25,10 @@ bool frightenedGhost(){
       ghosts[i].write(servoGhostLockAngle); //servos in middenpositie zetten
     }
   }
-  for (int i = 0; i < 3; i++){
-    ghostsLocked[i] = !digitalRead(ghostsDetectiePinnen[i]);
+  for (int i = 0; i < 3; i++){ //locken als je erin zit
+    ghostsLocked[i] = !pcf.digitalRead(ghostsDetectiePinnen[i]);
   }
-  for (int i = 0; i < 3; i++){
+  for (int i = 0; i < 3; i++){//de eerste loop dat hij erin zit score geven
     if (ghostsLocked[i] && ghostsNotDetectie[i]){
       score += scoreGhost;
       display = "ball locked! ";
@@ -40,14 +40,14 @@ bool frightenedGhost(){
   }
   if (ghostsLocked[0] && ghostsLocked[1] && ghostsLocked[2]){ //multiball code
     score += scoreMultibal;
-    ball += 2;
+    ball += 2; //zorgt ervoor dat je niet levens kwijt raakt van multibal
     display = "multiball!   ";
     for (int i = 0; i < 3; i++){
       ghosts[i].write(servoGhostReleaseAngle);
       ghostsLocked[i] = false;
     }
     endOfMultibal = true; // ook de frightenedGhost eindigd wanneer je multibal hebt
-    delay(500); // dit kan beter tbf maar een probleem voor later
+    delay(500);
     graceUntil = millis() + 3000;
   }
   if((millis() - beginFrightenedGhost > frightenedGhostTime) || endOfMultibal == true){ // stopt de frightenedghost code, nadat de tijd voorbij is of multibal

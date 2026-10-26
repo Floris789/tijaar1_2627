@@ -28,7 +28,7 @@ void life(){
     //een bal in een poortje telt alleen als verloren als dat poortje niet vastgehouden wordt
     bool gate = false;
     for (int i = 0; i < 3; i++){
-        if (!digitalRead(ghostsDetectiePinnen[i]) && !ghostsLocked[i]) gate = true;
+        if (!pcf.digitalRead(ghostsDetectiePinnen[i]) && !ghostsLocked[i]) gate = true;
     }
     bool graceOver = millis() >= graceUntil;
     bool lost = (gate && startFrightenedGhost == false && graceOver) || ldr();
@@ -59,7 +59,7 @@ void life(){
         startSafe = false;
         digitalWrite(safeLedPin, LOW);
     }
-    if (lives <= 0){
+    if (lives <= 0){ //als je geen levens meer hebt dan is het game over
         gameOver = true;
         display = "game over";
         startSafe = false;
