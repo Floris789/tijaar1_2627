@@ -16,7 +16,7 @@ bool textVisible; //is true waneer er text op de display is
 String display = " ";
 String displayBefore =  " ";
 LiquidCrystal_I2C lcd(0x27,16,2);
-byte pacman[] = {
+byte pacman[] = { //het pacmen tekeningetje voor de display
   B00000,
   B01110,
   B11100,
@@ -26,7 +26,7 @@ byte pacman[] = {
   B00000,
   B00000
 };
-byte ghost[] = {
+byte ghost[] = { //het spookje tekeningetje voor de display
   B00000,
   B01110,
   B10101,
@@ -37,7 +37,6 @@ byte ghost[] = {
   B00000
 };
 void displaySetup(){
-  //for (int i = 0; i<3; i++) ghostsLocked[i] = true;
   for (int i = 0; i < 3; i++) {
     ghostsLockedBefore[i] = ghostsLocked[i];
   }
@@ -50,7 +49,7 @@ void displaySetup(){
   lcd.print(0);
 }
 void displayLoop(){
-  if (score != scoreBefore){
+  if (score != scoreBefore){ //print de score als die veranderd
     lcd.home();
     lcd.print(score);
     scoreBefore = score;
@@ -78,7 +77,7 @@ void displayLoop(){
     }
 
   }
-  if (displayBefore != display){
+  if (displayBefore != display){ //print de tekst op de display
     displayBefore = display;
     beginDisplay = millis();
     textVisible = true;
