@@ -25,18 +25,12 @@ bool frightenedGhost(){
       ghosts[i].write(servoGhostLockAngle); //servos in middenpositie zetten
     }
   }
-  for (int i = 0; i < 3; i++){ //locken als je erin zit
-    ghostsLocked[i] = !pcf.digitalRead(ghostsDetectiePinnen[i]);
-  }
-  for (int i = 0; i < 3; i++){//de eerste loop dat hij erin zit score geven
-    if (ghostsLocked[i] && ghostsNotDetectie[i]){
-      score += scoreGhost;
-      display = "ball locked! ";
-      ghostsNotDetectie[i] = false;
-    }
-    if (!ghostsLocked[i]){
-      ghostsNotDetectie[i] = true;
-    }
+  for (int i = 0; i < 3; i++){
+      if (!ghostsLocked[i] && !pcf.digitalRead(ghostsDetectiePinnen[i])){
+          ghostsLocked[i] = true;      // blijft true tot multiball
+          score += scoreGhost;
+          display = "ball locked! ";
+      }
   }
   if (ghostsLocked[0] && ghostsLocked[1] && ghostsLocked[2]){ //multiball code
     score += scoreMultibal;

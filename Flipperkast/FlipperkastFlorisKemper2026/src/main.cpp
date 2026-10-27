@@ -19,9 +19,11 @@ void setup() {
   }
   pinModes();
   displaySetup();
-
+  display = "press buttons";
   leftFlipper.attach(leftFlipperPin);   leftFlipper.write(5);
+  leftUpFlipper.attach(leftUpFlipperPin); leftUpFlipper.write(5);
   rightFlipper.attach(rightFlipperPin); rightFlipper.write(120);
+  rightUpFlipper.attach(rightUpFlipperPin); rightUpFlipper.write(120);
   ghosts[0].attach(pinkyServoPin);  ghosts[0].write(servoGhostDownAngle);
   ghosts[1].attach(blinkyServoPin); ghosts[1].write(servoGhostDownAngle);
   ghosts[2].attach(clydeServoPin);  ghosts[2].write(servoGhostDownAngle);
@@ -29,16 +31,26 @@ void setup() {
   Serial.println("setup done");
 }
 bool gameStart(){
-  Serial.println(pcf.digitalRead(leftButtonFlipperPin));
-  Serial.println(pcf.digitalRead(rightButtonFlipperPin));
   delay(100);
 return ((start == false) && !pcf.digitalRead(leftButtonFlipperPin) && !pcf.digitalRead(rightButtonFlipperPin));
 }
 void flippers(){ // beweging van de flippers
-  if (!(pcf.digitalRead(leftButtonFlipperPin))) leftFlipper.write(110);
-  else leftFlipper.write(5);
-  if (!(pcf.digitalRead(rightButtonFlipperPin))) rightFlipper.write(15);
-  else rightFlipper.write(120);
+  if (!(pcf.digitalRead(leftButtonFlipperPin))){
+    leftFlipper.write(110);
+    leftUpFlipper.write(110);
+  }
+  else {
+    leftFlipper.write(5);
+    leftUpFlipper.write(5);
+  }
+  if (!(pcf.digitalRead(rightButtonFlipperPin))) {
+    rightFlipper.write(15);
+    rightUpFlipper.write(15);
+  }
+  else {
+    rightFlipper.write(120);
+    rightUpFlipper.write(120);
+  }
 }
 void enegizers(){
   if (enegizer1Available && !(digitalRead(leftIrPin))){
@@ -55,7 +67,7 @@ void loop() {
     start = true;
      display = "start";
     Serial.print("game started\n");
-  } else display = "press buttons";
+  }
   if (start){
     if (!gameOver){
       flippers();

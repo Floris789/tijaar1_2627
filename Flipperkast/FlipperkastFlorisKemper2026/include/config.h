@@ -9,16 +9,18 @@
 #include <Servo.h>
 const int leftButtonFlipperPin = 1;  // PCF8574 P0
 const int rightButtonFlipperPin = 0; // PCF8574 P1
+const int leftUpFlipperPin = 13;
+const int rightUpFlipperPin = 12;
 const int leftFlipperPin = 5;
 const int rightFlipperPin = 6;
 const int leftIrPin = 2;
 const int rightIrPin = 7;
-const int ldrPin = A4;
+const int ldrPin = A2;
 const int pinkyServoPin = 8;
 const int blinkyServoPin = 4;
 const int clydeServoPin = 11;
 const int ghostsDetectiePinnen[3] = {2, 3, 4}; //PCF8574 P2, P3, P4: pinky, blinky en clyde
-const int safeLedPin = 13;
+const int safeLedPin = 3;
 extern Adafruit_PCF8574 pcf; //zorgt voor extra pinnen
 extern bool ghostsLocked[3];
 extern bool startFrightenedGhost;
@@ -45,6 +47,8 @@ const int servoGhostReleaseAngle = 0;// Dit is de hoek waar de servo in moet sta
 //boven midden midden
 //laag laag laag
 
+Servo leftUpFlipper;
+Servo rightUpFlipper;
 Servo leftFlipper;
 Servo rightFlipper;
 Servo blinky; //de middelste poort
