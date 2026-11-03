@@ -65,7 +65,7 @@ void enegizers(){
 void loop() {
   if (!start && gameStart()){
     start = true;
-     display = "start";
+    display = "start";
     Serial.print("game started\n");
   }
   if (start){

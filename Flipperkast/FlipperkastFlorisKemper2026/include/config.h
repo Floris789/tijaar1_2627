@@ -6,6 +6,8 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_PCF8574.h>
+#include <Wire.h>
+#include <Adafruit_PCF8574.h>
 #include <Servo.h>
 const int leftButtonFlipperPin = 1;  // PCF8574 P0
 const int rightButtonFlipperPin = 0; // PCF8574 P1
@@ -31,6 +33,11 @@ void pinModes(){
     pcf.pinMode(leftButtonFlipperPin, INPUT_PULLUP);
     pcf.pinMode(rightButtonFlipperPin, INPUT_PULLUP);
     for (int i = 0; i < 3; i++) pcf.pinMode(ghostsDetectiePinnen[i], INPUT_PULLUP);
+    pinMode(rightIrPin, INPUT);
+    pinMode(leftIrPin, INPUT_PULLUP);
+    pcf.pinMode(leftButtonFlipperPin, INPUT_PULLUP);
+    pcf.pinMode(rightButtonFlipperPin, INPUT_PULLUP);
+    for (int i = 0; i < 3; i++) pcf.pinMode(ghostsDetectiePinnen[i], INPUT_PULLUP);
 }
 const int scoreEnegizer = 50; //de score die je krijgt van een (available) enegizer te raken.
 const int scoreGhost = 200; //de hoeveelheid punten die je krijgt als je je ball locked.
@@ -51,6 +58,9 @@ Servo leftUpFlipper;
 Servo rightUpFlipper;
 Servo leftFlipper;
 Servo rightFlipper;
+Servo blinky; //de middelste poort
+Servo clyde; //de rechter poort
+Servo pinky; //de linker port
 Servo blinky; //de middelste poort
 Servo clyde; //de rechter poort
 Servo pinky; //de linker port
