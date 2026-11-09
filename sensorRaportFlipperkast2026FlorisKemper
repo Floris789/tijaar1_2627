@@ -103,9 +103,9 @@ Omdat volgens de uitslag van requirement 3 de LDR minder betrouwbaar is, is het 
 ### 4.2 Extra Requirement 2
 **Requirement:** Ik heb 2 sensoren nodig die onder de bodemplaat van de flipperkast zit en die de bal moet kunnen detecteren als deze eroverheen gaat. 
 ##### IR sensor
-Deze sensor werkt prima voor deze situatie, hij kan de bal detecteren ook als deze heel dichtbij is.
+Deze sensor werkt prima voor deze situatie, hij kan de bal detecteren ook als deze heel dichtbij is. Ik heb 2 van deze sensors dus dat is genoeg.
 ##### LDR + laser
-Deze sensor werkt door de LDR tegenover de laser te plaatsen maar aangezien de LDR dan in de bodemplaat moet geplaatst worden zou de laser dan van bovenaf erop moeten schijnen. Aangezien dat extra complexiteit toevoegt voldoet deze sensor niet aan deze eis.
+Ik heb maar 2 LDR sensoren dus ik zou deze voor maar 1 van de 2 sensoren kunnen gebruiken aangezien ik al 1 van deze gebruik voor 4.1. Deze sensor werkt door de LDR tegenover de laser te plaatsen maar aangezien de LDR dan in de bodemplaat moet geplaatst worden zou de laser dan van bovenaf erop moeten schijnen. Aangezien dat extra complexiteit toevoegt voldoet deze sensor niet aan deze eis.
 ##### Inductive proximity sensor (LJ18A3-8-Z BX)
 Deze sensor is hier perfect voor. De 0.8 centimeter is ruim voldoende om de bal te detecteren als deze eroverheen rolt. Het is wel zo dat ik hier maar 1 van bezit dus dat ik deze voor 1 van de 2 kan gebruiken.
 #### Vergelijking
