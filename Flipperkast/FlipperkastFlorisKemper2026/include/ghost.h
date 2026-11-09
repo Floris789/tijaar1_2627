@@ -18,6 +18,7 @@ extern bool enegizer2Available;
 extern unsigned long graceUntil;
 bool frightenedGhost(){
   if (startFrightenedGhost == false){ //zorgt dat deze code maar 1 word afgespeelt voor elke keer frightenedGHost word geactiveerd.
+    lives = 0;
     beginFrightenedGhost = millis();
     startFrightenedGhost = true;
     score += scoreEnegizer;

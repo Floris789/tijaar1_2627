@@ -61,9 +61,6 @@ Servo rightFlipper;
 Servo blinky; //de middelste poort
 Servo clyde; //de rechter poort
 Servo pinky; //de linker port
-Servo blinky; //de middelste poort
-Servo clyde; //de rechter poort
-Servo pinky; //de linker port
 Servo ghosts[3] = {pinky, blinky, clyde};
 #endif
 
