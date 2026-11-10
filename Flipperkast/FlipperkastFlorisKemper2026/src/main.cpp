@@ -53,10 +53,13 @@ void flippers(){ // beweging van de flippers
   }
 }
 void enegizers(){
-  if (enegizer1Available && !(digitalRead(leftIrPin))){
-    enegizer1Available = false;
-    frightenedGhost(); //zorgt ervoor dat je in de spoken moet nadat je over een enegizer bent gegaan
-  } 
+  if (proximityFlag){
+      proximityFlag = false;
+      if (enegizer1Available){
+          enegizer1Available = false;
+          frightenedGhost();
+      }
+  }
   if (enegizer2Available && !(digitalRead(rightIrPin))){
     enegizer2Available = false;
     frightenedGhost();
@@ -83,7 +86,7 @@ void loop() {
   
   //Ir test
   // Serial.print("left");
-  // Serial.print(digitalRead(leftIrPin));
+  // Serial.print(digitalRead(proximityPin));
   // Serial.print("right");
   // Serial.println(digitalRead(rightIrPin));
   

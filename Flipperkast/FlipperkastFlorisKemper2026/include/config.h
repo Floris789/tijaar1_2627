@@ -15,7 +15,7 @@ const int leftUpFlipperPin = 13;
 const int rightUpFlipperPin = 12;
 const int leftFlipperPin = 5;
 const int rightFlipperPin = 6;
-const int leftIrPin = 2;
+const int proximityPin = 2;
 const int rightIrPin = 7;
 const int ldrPin = A2;
 const int pinkyServoPin = 8;
@@ -26,18 +26,25 @@ const int safeLedPin = 3;
 extern Adafruit_PCF8574 pcf; //zorgt voor extra pinnen
 extern bool ghostsLocked[3];
 extern bool startFrightenedGhost;
+volatile bool proximityFlag = false;   // true als de inductieve sensor de bal heeft gezien
+
+void proximityISR(){ //De ISR (=Interrupt Service Routine) code. deze word alleen uitgevoerd door de interupt. 
+    proximityFlag = true;
+}
+
 void pinModes(){
     pinMode(safeLedPin, OUTPUT);
     pinMode(rightIrPin, INPUT);
-    pinMode(leftIrPin, INPUT_PULLUP);
+    pinMode(proximityPin, INPUT_PULLUP);
     pcf.pinMode(leftButtonFlipperPin, INPUT_PULLUP);
     pcf.pinMode(rightButtonFlipperPin, INPUT_PULLUP);
     for (int i = 0; i < 3; i++) pcf.pinMode(ghostsDetectiePinnen[i], INPUT_PULLUP);
     pinMode(rightIrPin, INPUT);
-    pinMode(leftIrPin, INPUT_PULLUP);
+    pinMode(proximityPin, INPUT_PULLUP);
     pcf.pinMode(leftButtonFlipperPin, INPUT_PULLUP);
     pcf.pinMode(rightButtonFlipperPin, INPUT_PULLUP);
     for (int i = 0; i < 3; i++) pcf.pinMode(ghostsDetectiePinnen[i], INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(proximityPin), proximityISR, FALLING);
 }
 const int scoreEnegizer = 50; //de score die je krijgt van een (available) enegizer te raken.
 const int scoreGhost = 200; //de hoeveelheid punten die je krijgt als je je ball locked.
@@ -48,11 +55,7 @@ const unsigned long displayTime = 6000; //hoelang tekst zichtbaar blijft op het 
 const int servoGhostDownAngle = 180;// Dit is de hoek waar de servo in moet staan om de ball in de ghost naar beneden te brengen.
 const int servoGhostLockAngle = 90;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te locken.
 const int servoGhostReleaseAngle = 0;// Dit is de hoek waar de servo in moet staan om de ball in de ghost te release.
-//boven down down
-//midden midden midden
 
-//boven midden midden
-//laag laag laag
 
 Servo leftUpFlipper;
 Servo rightUpFlipper;
@@ -65,3 +68,5 @@ Servo ghosts[3] = {pinky, blinky, clyde};
 #endif
 
 //Adafruit_PCF8574 
+//Tech Explorations, “10. The interrupt service routine and volatile variables - Tech Explorations,” Tech Explorations, Mar. 05, 2024. https://techexplorations.com/guides/arduino/programming/interrupts-volatile/ 
+//“attachInterrupt(),” arduino.cc, Apr. 24, 2025. https://docs.arduino.cc/language-reference/en/functions/external-interrupts/attachInterrupt/ (accessed Nov. 10, 2026).
